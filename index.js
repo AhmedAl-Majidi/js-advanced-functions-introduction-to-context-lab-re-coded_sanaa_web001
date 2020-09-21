@@ -14,12 +14,12 @@ const createEmployeeRecords = (data)=> {
     return data.map((row) => createEmployeeRecord(row))
 }
 
-let createTimeInEvent = function(emp, date){
-    let [date, hour] = date.split(' ')
-    emp.timeInEvents.push({
-        type: "TimeIn",
+let createTimeOutEvent = function(employee, dateStamp){
+    let [date, hour] = dateStamp.split(' ')
+    employee.timeOutEvents.push({
+        type: "TimeOut",
         hour: parseInt(hour, 10),
-        date
+        date,
     })
-    return emp;
+    return employee;
 }
