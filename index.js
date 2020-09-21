@@ -1,29 +1,43 @@
-
-let createEmployeeRecord = (row) =>{
-  return {
-      firstName: row[0],
-      familyName: row[1],
-      title: row[2],
-      payPerHour: row[3],
-      timeInEvents: [],
-      timeOutEvents: []
-  }
+let createEmployeeRecord = function(row){
+    return {
+        firstName: row[0],
+        familyName: row[1],
+        title: row[2],
+        payPerHour: row[3],
+        timeInEvents: [],
+        timeOutEvents: []
+    }
 }
 
-const createEmployeeRecords = (data)=> {
-    return data.map((row) => createEmployeeRecord(row))
+let createEmployeeRecords = function(employeeRowData) {
+    return employeeRowData.map(function(row){
+        return createEmployeeRecord(row)
+    })
+}
+
+let createTimeInEvent = function(employee, dateStamp){
+    let [date, hour] = dateStamp.split(' ')
+
+    employee.timeInEvents.push({
+        type: "TimeIn",
+        hour: parseInt(hour, 10),
+        date,
+    })
+
+    return employee
 }
 
 let createTimeOutEvent = function(employee, dateStamp){
     let [date, hour] = dateStamp.split(' ')
+
     employee.timeOutEvents.push({
         type: "TimeOut",
         hour: parseInt(hour, 10),
         date,
     })
-    return employee;
-}
 
+    return employee
+}
 
 let hoursWorkedOnDate = function(employee, soughtDate){
     let inEvent = employee.timeInEvents.find(function(e){
@@ -37,9 +51,8 @@ let hoursWorkedOnDate = function(employee, soughtDate){
     return (outEvent.hour - inEvent.hour) / 100
 }
 
-
-let wagesEarnedOnDate = function(employee, date){
-    let rawWage = hoursWorkedOnDate(employee, date)
+let wagesEarnedOnDate = function(employee, dateSought){
+    let rawWage = hoursWorkedOnDate(employee, dateSought)
         * employee.payPerHour
     return parseFloat(rawWage.toString())
 }
@@ -48,12 +61,10 @@ let allWagesFor = function(employee){
     let eligibleDates = employee.timeInEvents.map(function(e){
         return e.date
     })
-
     let payable = eligibleDates.reduce(function(memo, d){
         return memo + wagesEarnedOnDate(employee, d)
     }, 0)
-
-    return payable;
+    return payable
 }
 let findEmployeeByFirstName = function(srcArray, firstName) {
   return srcArray.find(function(rec){
