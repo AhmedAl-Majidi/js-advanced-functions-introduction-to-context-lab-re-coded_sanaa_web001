@@ -9,3 +9,7 @@ let createEmployeeRecord = (row) =>{
       timeOutEvents: []
   }
 }
+
+const createEmployeeRecords = (data)=> {
+    return data.map((row) => createEmployeeRecord(row))
+}
