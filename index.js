@@ -21,4 +21,5 @@ let createTimeInEvent = function(emp, date){
         hour: parseInt(hour, 10),
         date
     })
+    return emp;
 }
